@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login with Dynamic Background</title>
+    <style>
+        /* Γενικές Ρυθμίσεις */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        /* Background Wrapper */
+        #background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        /* Container της φόρμας */
+        .login-container {
+            position: relative;
+            z-index: 1;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            padding: 30px 40px;
+            width: 100%;
+            max-width: 400px;
+            box-sizing: border-box;
+            text-align: center;
+            margin: auto;
+        }
+
+        /* Λογότυπο */
+        .login-container img {
+            max-width: 120px;
+            margin-bottom: 20px;
+        }
+
+        /* Τίτλος φόρμας */
+        .login-container h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            font-style: italic;
+        }
+
+        /* Στυλ για τα πεδία εισαγωγής */
+        .login-container input[type="text"],
+        .login-container input[type="password"] {
+            width: 100%;
+            padding: 12px 15px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+/* Το iframe πρέπει να καταλαμβάνει όλη την οθόνη */
+iframe {
+
+    width: 100%;
+    height: 100%;
+
+}
+
+        .login-container input:focus {
+            border-color: #4c8bf5;
+            outline: none;
+            box-shadow: 0 0 8px rgba(76, 139, 245, 0.3);
+        }
+
+        /* Στυλ για το κουμπί */
+        .login-container button {
+            width: 100%;
+            padding: 12px 20px;
+            background: #4c8bf5;
+            border: none;
+            border-radius: 5px;
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .login-container button:hover {
+            background: #3a78e0;
+        }
+
+        /* Στυλ για τα μηνύματα σφάλματος */
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        /* Στυλ για τη στοίχιση */
+        .wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+
+        /* Κρυφό iframe μέχρι το login να είναι επιτυχές */
+        #report-container {
+            display: none;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Δυναμικό Background -->
+    <div id="background"></div>
+
+    <!-- Περιτύλιξη για Κεντραρισμένη Φόρμα -->
+    <div class="wrapper">
+        <!-- Φόρμα Εισόδου -->
+        <div class="login-container">
+            <!-- Λογότυπο -->
+            <img src="images/logo.png" alt="Logo" />
+            <h2>Login to see your <italic>Reports</italic></h2>
+            <form onsubmit="handleSubmit(event)">
+                <input type="text" id="username" placeholder="Username" required />
+                <input type="password" id="password" placeholder="Password" required />
+                <button type="submit">Login</button>
+            </form>
+            <div class="error-message" id="error-message"></div>
+        </div>
+    </div>
+
+    <!-- Στοιχείο για το iframe με το Power BI Report -->
+    <div id="report-container">
+        <h1>Welcome to your Power BI Report</h1>
+        <!-- Στην σελίδα /report -->
+        <iframe title="Powebi_sspc" width="100%" height="100%" src="https://app.powerbi.com/reportEmbed?reportId=544eed94-9edd-4272-a53d-7f4b76342d8a&autoAuth=true&ctid=3d13b5cc-d235-4de8-8f3e-4fc6df91a673" frameborder="0" allowFullScreen="true"></iframe>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js" integrity="sha512-334uBDwY0iZ2TklV1OtDtBW9vp7jjP7SWRzT7Ehu1fdtPIjTpCwTSFb8HI/YBau9L1/kRBEOALrS229Kry4yFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanta/0.5.24/vanta.waves.min.js" integrity="sha512-gqHa0ICeg1WCe5rOOlxMjC1lXvXN3350qWwbePm2HV/pu2Qas+Nswuc+Eb62NZ/JOpMmOhZk4Chaak3twaBRRQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+    VANTA.WAVES({
+      el: ".wrapper",
+      mouseControls: true,
+      touchControls: true,
+      gyroControls: false,
+      minHeight: 200.00,
+      minWidth: 200.00,
+      scale: 1.00,
+      scaleMobile: 1.00,
+      color: 0x1578c3
+    });
+
+        // Συνάρτηση για την Υποβολή
+        async function handleSubmit(e) {
+    e.preventDefault();
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+    const errorMessage = document.getElementById("error-message");
+
+    try {
+        const response = await fetch("http://localhost:5000/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ username, password }),
+        });
+
+        console.log(response);  // Δες την απάντηση του server στο console
+
+        if (response.ok) {
+            const data = await response.json();
+            console.log(data);  // Δες τα δεδομένα που επιστρέφει το server
+
+            // Αποθήκευση του token στο localStorage
+            localStorage.setItem("token", data.token);
+
+            // Σώστα το redirect
+            console.log("Redirecting to report page...");
+            window.location.replace("/report");  // Αλλαγή από href σε replace
+        } else {
+            errorMessage.textContent = "Login failed. Please check your credentials.";
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        errorMessage.textContent = "An error occurred. Please try again.";
+    }
+}
+
+    </script>
+</body>
+</html>
