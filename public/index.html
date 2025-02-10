@@ -67,14 +67,6 @@
             box-sizing: border-box;
         }
 
-/* Το iframe πρέπει να καταλαμβάνει όλη την οθόνη */
-iframe {
-
-    width: 100%;
-    height: 100%;
-
-}
-
         .login-container input:focus {
             border-color: #4c8bf5;
             outline: none;
@@ -122,17 +114,13 @@ iframe {
     </style>
 </head>
 <body>
-    <!-- Δυναμικό Background -->
     <div id="background"></div>
 
-    <!-- Περιτύλιξη για Κεντραρισμένη Φόρμα -->
     <div class="wrapper">
-        <!-- Φόρμα Εισόδου -->
         <div class="login-container">
-            <!-- Λογότυπο -->
             <img src="images/logo.png" alt="Logo" />
             <h2>Login to see your <italic>Reports</italic></h2>
-            <form onsubmit="handleSubmit(event)">
+            <form id="login-form">
                 <input type="text" id="username" placeholder="Username" required />
                 <input type="password" id="password" placeholder="Password" required />
                 <button type="submit">Login</button>
@@ -141,67 +129,112 @@ iframe {
         </div>
     </div>
 
-    <!-- Στοιχείο για το iframe με το Power BI Report -->
-    <div id="report-container">
+    <div id="report-container" style="display: none;">
         <h1>Welcome to your Power BI Report</h1>
-        <!-- Στην σελίδα /report -->
-        <iframe title="Powebi_sspc" width="100%" height="100%" src="https://app.powerbi.com/reportEmbed?reportId=544eed94-9edd-4272-a53d-7f4b76342d8a&autoAuth=true&ctid=3d13b5cc-d235-4de8-8f3e-4fc6df91a673" frameborder="0" allowFullScreen="true"></iframe>
-
+        <iframe title="ERGA ORES" width="100%" height="100%" src="https://app.powerbi.com/reportEmbed?reportId=3a030bfb-3f60-4865-9914-e12c8fa4506d&autoAuth=true&ctid=3d13b5cc-d235-4de8-8f3e-4fc6df91a673" frameborder="0" allowFullScreen="true"></iframe>
     </div>
 
-    <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js" integrity="sha512-334uBDwY0iZ2TklV1OtDtBW9vp7jjP7SWRzT7Ehu1fdtPIjTpCwTSFb8HI/YBau9L1/kRBEOALrS229Kry4yFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanta/0.5.24/vanta.waves.min.js" integrity="sha512-gqHa0ICeg1WCe5rOOlxMjC1lXvXN3350qWwbePm2HV/pu2Qas+Nswuc+Eb62NZ/JOpMmOhZk4Chaak3twaBRRQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <script>
-    VANTA.WAVES({
-      el: ".wrapper",
-      mouseControls: true,
-      touchControls: true,
-      gyroControls: false,
-      minHeight: 200.00,
-      minWidth: 200.00,
-      scale: 1.00,
-      scaleMobile: 1.00,
-      color: 0x1578c3
-    });
-
-        // Συνάρτηση για την Υποβολή
-        async function handleSubmit(e) {
-    e.preventDefault();
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
-    const errorMessage = document.getElementById("error-message");
-
-    try {
-        const response = await fetch("https://powerbi-app.onrender.com/login", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ username, password }),
+        // Σύνδεση με το Vanta Waves
+        VANTA.WAVES({
+            el: ".wrapper",
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            scale: 1.00,
+            scaleMobile: 1.00,
+            color: 0x1578c3
         });
 
-        console.log(response);  // Δες την απάντηση του server στο console
+        // Συνάρτηση για την Υποβολή του Login
+        async function handleSubmit(e) {
+            e.preventDefault();
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+            const errorMessage = document.getElementById("error-message");
 
-        if (response.ok) {
-            const data = await response.json();
-            console.log(data);  // Δες τα δεδομένα που επιστρέφει το server
+            try {
+                const response = await fetch("http://localhost:5000/login", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ username, password }),
+                    credentials: "include"
+                });
 
-            // Αποθήκευση του token στο localStorage
-            localStorage.setItem("token", data.token);
+                console.log(response);  // Δες την απάντηση του server στο console
 
-            // Σώστα το redirect
-            console.log("Redirecting to report page...");
-            window.location.replace("/report");  // Αλλαγή από href σε replace
-        } else {
-            errorMessage.textContent = "Login failed. Please check your credentials.";
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log(data);  // Δες τα δεδομένα που επιστρέφει το server
+
+                    // Αποθήκευση του token στο localStorage
+                    localStorage.setItem("token", data.token);
+
+                    // Σώστα το redirect
+                    console.log("Redirecting to report page...");
+                    window.location.replace("/report");  // Αλλαγή από href σε replace
+                } else {
+                    errorMessage.textContent = "Login failed. Please check your credentials.";
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                errorMessage.textContent = "An error occurred. Please try again.";
+            }
         }
-    } catch (error) {
-        console.error("Error:", error);
-        errorMessage.textContent = "An error occurred. Please try again.";
-    }
-}
 
+        // Συνάρτηση για να φέρουμε το Power BI report
+        async function fetchReport() {
+            const token = localStorage.getItem("token");
+
+            if (!token) {
+                console.log("No token found, redirecting to login...");
+                window.location.replace("/login");
+                return;
+            }
+
+            try {
+                const response = await fetch("http://localhost:5000/report", {
+                    method: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token // Στέλνουμε το token στον server
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.text(); // Αντί για JSON, αν το report είναι HTML
+                    document.getElementById('report-container').innerHTML = data;
+                } else {
+                    console.error("Failed to fetch the report:", response);
+                    alert("Unauthorized: Invalid token or expired session.");
+                }
+            } catch (error) {
+                console.error("Error:", error);
+            }
+        }
+
+        // Ενέργεια όταν φορτώνει η σελίδα για να δούμε αν έχουμε ήδη token
+        document.addEventListener("DOMContentLoaded", function() {
+            const token = localStorage.getItem("token");
+
+            if (token) {
+                // Αν υπάρχει token, προβάλει το Power BI report
+                document.getElementById("report-container").style.display = "block";
+                fetchReport(); // Κλήση για την απόκτηση του Power BI report
+            } else {
+                // Αν δεν υπάρχει token, παραμένει στη φόρμα login
+                document.getElementById("report-container").style.display = "none";
+            }
+        });
+
+        // Καταχώρηση του χειριστή του form
+        document.getElementById("login-form").addEventListener("submit", handleSubmit);
     </script>
 </body>
 </html>
