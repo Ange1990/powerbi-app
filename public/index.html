@@ -159,7 +159,8 @@
             const errorMessage = document.getElementById("error-message");
 
             try {
-                const response = await fetch("http://localhost:5000/login", {
+                const response = await fetch(import.meta.env.VITE_API_URL + "/login", {
+
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -200,7 +201,8 @@
             }
 
             try {
-                const response = await fetch("http://localhost:5000/report", {
+               const response = await fetch(import.meta.env.VITE_API_URL + "/report", {
+
                     method: "GET",
                     headers: {
                         "Authorization": "Bearer " + token // Στέλνουμε το token στον server
