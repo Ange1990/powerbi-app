@@ -7,7 +7,7 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 // CORS για επιτρεπόμενα origins (βάλε το δικό σου frontend URL)
-const allowedOrigins = ['https://phenomenal-puffpuff-c43408.netlify.app/', 'http://localhost:3000', 'http://localhost:5000','https://powerbi-app-git-main-george-angelidis-projects.vercel.app'];
+const allowedOrigins = ['https://phenomenal-puffpuff-c43408.netlify.app', 'http://localhost:3000', 'http://localhost:5000','https://powerbi-app-git-main-george-angelidis-projects.vercel.app'];
 app.use(cors({
     origin: function (origin, callback) {
         if (!origin || allowedOrigins.includes(origin)) {
