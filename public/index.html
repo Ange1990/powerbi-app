@@ -159,7 +159,7 @@
             const errorMessage = document.getElementById("error-message");
 
             try {
-               const response = await fetch(import.meta.env.VITE_API_URL + "/login", { // Τοποθέτησε την πραγματική διεύθυνση API σου
+               const response = await fetch("https://powerbi-app-git-main-george-angelidis-projects.vercel.app/login", { // Τοποθέτησε την πραγματική διεύθυνση API σου
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
