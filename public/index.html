@@ -181,7 +181,7 @@
 
                     // Σώστα το redirect
                     console.log("Redirecting to report page...");
-                    window.location.replace("https://app.powerbi.com/reportEmbed?reportId=3a030bfb-3f60-4865-9914-e12c8fa4506d&autoAuth=true&ctid=3d13b5cc-d235-4de8-8f3e-4fc6df91a673");  // Αλλαγή από href σε replace
+                    window.location.href = "https://app.powerbi.com/reportEmbed?reportId=3a030bfb-3f60-4865-9914-e12c8fa4506d&autoAuth=true&ctid=3d13b5cc-d235-4de8-8f3e-4fc6df91a673";  // Αλλαγή από href σε replace
                 } else {
                     errorMessage.textContent = "Login failed. Please check your credentials.";
                 }
