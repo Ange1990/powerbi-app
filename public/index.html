@@ -176,9 +176,6 @@
                     const data = await response.json();
                     console.log(data);  // Δες τα δεδομένα που επιστρέφει το server
 
-                    // Αποθήκευση του token στο localStorage
-                    localStorage.setItem("token", data.token);
-
                     // Σώστα το redirect
                     console.log("Redirecting to report page...");
                     window.location.href = "https://app.powerbi.com/reportEmbed?reportId=3a030bfb-3f60-4865-9914-e12c8fa4506d&autoAuth=true&ctid=3d13b5cc-d235-4de8-8f3e-4fc6df91a673";  // Αλλαγή από href σε replace
@@ -191,50 +188,14 @@
             }
         }
 
-        // Συνάρτηση για να φέρουμε το Power BI report
-        async function fetchReport() {
-            const token = localStorage.getItem("token");
-
-            if (!token) {
-                console.log("No token found, redirecting to login...");
-                window.location.replace("/login");
-                return;
-            }
-
-            try {
-              const response = await fetch(import.meta.env.VITE_API_URL + "/report", {
-
-
-                    method: "GET",
-                    headers: {
-                        "Authorization": "Bearer " + token // Στέλνουμε το token στον server
-                    }
-                });
-
-                if (response.ok) {
-                    const data = await response.text(); // Αντί για JSON, αν το report είναι HTML
-                    document.getElementById('report-container').innerHTML = data;
-                } else {
-                    console.error("Failed to fetch the report:", response);
-                    alert("Unauthorized: Invalid token or expired session.");
-                }
-            } catch (error) {
-                console.error("Error:", error);
-            }
-        }
+    
 
         // Ενέργεια όταν φορτώνει η σελίδα για να δούμε αν έχουμε ήδη token
         document.addEventListener("DOMContentLoaded", function() {
-            const token = localStorage.getItem("token");
-
-            if (token) {
-                // Αν υπάρχει token, προβάλει το Power BI report
+      
                 document.getElementById("report-container").style.display = "block";
                 fetchReport(); // Κλήση για την απόκτηση του Power BI report
-            } else {
-                // Αν δεν υπάρχει token, παραμένει στη φόρμα login
-                document.getElementById("report-container").style.display = "none";
-            }
+            } 
         });
 
         // Καταχώρηση του χειριστή του form
