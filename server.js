@@ -1,13 +1,12 @@
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
-const bcrypt = require('bcrypt');
 
 const app = express();
 const port = process.env.PORT || 5000;
 
 // CORS για επιτρεπόμενα origins
-const allowedOrigins = ['https://phenomenal-puffpuff-c43408.netlify.app', 'http://localhost:3000', 'http://localhost:5000','https://powerbi-app-git-main-george-angelidis-projects.vercel.app'];
+const allowedOrigins = ['https://phenomenal-puffpuff-c43408.netlify.app', 'http://localhost:3000', 'http://localhost:5000', 'https://powerbi-app-git-main-george-angelidis-projects.vercel.app'];
 app.use(cors({
     origin: function (origin, callback) {
         if (!origin || allowedOrigins.includes(origin)) {
@@ -24,14 +23,14 @@ app.use(cors({
 // Middleware για να διαβάζει JSON requests
 app.use(express.json());
 
-// Dummy users με hashed passwords
+// Dummy users με απλά passwords (χωρίς κρυπτογράφηση)
 const users = [
-    { username: 'user1', password: bcrypt.hashSync('password1', 10) },
-    { username: 'user2', password: bcrypt.hashSync('password2', 10) }
+    { username: 'user1', password: 'password1' },
+    { username: 'user2', password: 'password2' }
 ];
 
 // Login endpoint χωρίς JWT
-app.post('/login', async (req, res) => {
+app.post('/login', (req, res) => {
     console.log("🔹 Received login request:", req.body);
 
     const { username, password } = req.body;
@@ -44,10 +43,8 @@ app.post('/login', async (req, res) => {
         return res.status(401).json({ message: 'Invalid credentials' });
     }
 
-    // Συγκρίνουμε το password με το hashed password
-    const passwordMatch = await bcrypt.compare(password, user.password);
-
-    if (!passwordMatch) {
+    // Συγκρίνουμε το password με το απλό password
+    if (password !== user.password) {
         console.log("❌ Incorrect password for:", username);
         return res.status(401).json({ message: 'Invalid credentials' });
     }
