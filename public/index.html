@@ -159,9 +159,7 @@
             const errorMessage = document.getElementById("error-message");
 
             try {
-               const response = await fetch(import.meta.env.VITE_API_URL + "/login", {
-
-
+               const response = await fetch(import.meta.env.VITE_API_URL + "/login", { // Τοποθέτησε την πραγματική διεύθυνση API σου
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -176,9 +174,9 @@
                     const data = await response.json();
                     console.log(data);  // Δες τα δεδομένα που επιστρέφει το server
 
-                    // Σώστα το redirect
+                    // Ανακατεύθυνση στο Power BI report
                     console.log("Redirecting to report page...");
-                    window.location.href = "https://app.powerbi.com/reportEmbed?reportId=3a030bfb-3f60-4865-9914-e12c8fa4506d&autoAuth=true&ctid=3d13b5cc-d235-4de8-8f3e-4fc6df91a673";  // Αλλαγή από href σε replace
+                    window.location.href = "https://app.powerbi.com/reportEmbed?reportId=3a030bfb-3f60-4865-9914-e12c8fa4506d&autoAuth=true&ctid=3d13b5cc-d235-4de8-8f3e-4fc6df91a673";  // Ανακατεύθυνση χωρίς token
                 } else {
                     errorMessage.textContent = "Login failed. Please check your credentials.";
                 }
@@ -188,14 +186,9 @@
             }
         }
 
-    
-
-        // Ενέργεια όταν φορτώνει η σελίδα για να δούμε αν έχουμε ήδη token
+        // Ενέργεια όταν φορτώνει η σελίδα
         document.addEventListener("DOMContentLoaded", function() {
-      
-                document.getElementById("report-container").style.display = "block";
-                fetchReport(); // Κλήση για την απόκτηση του Power BI report
-            } 
+            document.getElementById("report-container").style.display = "none";  // Εμφάνιση φόρμας login κατά την φόρτωση
         });
 
         // Καταχώρηση του χειριστή του form
