@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt');
 const app = express();
 const port = process.env.PORT || 5000;
 
-// CORS για επιτρεπόμενα origins (βάλε το δικό σου frontend URL)
+// CORS για επιτρεπόμενα origins
 const allowedOrigins = ['https://phenomenal-puffpuff-c43408.netlify.app', 'http://localhost:3000', 'http://localhost:5000','https://powerbi-app-git-main-george-angelidis-projects.vercel.app'];
 app.use(cors({
     origin: function (origin, callback) {
@@ -30,7 +30,7 @@ const users = [
     { username: 'user2', password: bcrypt.hashSync('password2', 10) }
 ];
 
-// Login endpoint με ασφαλή σύγκριση bcrypt χωρίς JWT
+// Login endpoint χωρίς JWT
 app.post('/login', async (req, res) => {
     console.log("🔹 Received login request:", req.body);
 
