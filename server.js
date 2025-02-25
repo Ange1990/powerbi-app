@@ -52,4 +52,6 @@ app.get('/report', (req, res) => {
     `);
 });
 
+// Εξάγουμε την εφαρμογή για να τη διαχειριστεί το Vercel
+module.exports = app;
 
