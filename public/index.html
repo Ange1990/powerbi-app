@@ -172,7 +172,7 @@
                     console.log(data);
 
                     // Ανακατεύθυνση στο Power BI report
-                    window.location.href = "https://app.powerbi.com/reportEmbed?reportId=3a030bfb-3f60-4865-9914-e12c8fa4506d&autoAuth=true&ctid=3d13b5cc-d235-4de8-8f3e-4fc6df91a673";
+                    window.location.href = data.reportUrl;
                 } else {
                     errorMessage.textContent = "Login failed. Please check your credentials.";
                 }
