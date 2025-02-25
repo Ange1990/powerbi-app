@@ -6,11 +6,17 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 // Επιτρέπει όλα τα origins χωρίς περιορισμούς
+
 app.use(cors({
-    origin: true, // Επιτρέπει requests από όλους
-    methods: ['GET', 'POST'],
-    allowedHeaders: ['Content-Type']
+    origin: '*',  // Επιτρέπει όλα τα origins
+    methods: ['GET', 'POST', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: false
 }));
+
+// Χειρισμός προ-ερωτήσεων (Preflight requests)
+app.options('*', cors());
+
 
 // Middleware για να διαβάζει JSON requests
 app.use(express.json());
