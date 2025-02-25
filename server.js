@@ -23,8 +23,8 @@ app.use(express.json());
 
 // Dummy users
 const users = [
-    { username: 'user1', password: 'password1', reportUrl: 'https://app.powerbi.com/reportEmbed?reportId=3a030bfb-3f60-4865-9914-e12c8fa4506d&autoAuth=true&ctid=3d13b5cc-d235-4de8-8f3e-4fc6df91a673' },
-    { username: 'user2', password: 'password2', reportUrl: 'https://app.powerbi.com/reportEmbed?reportId=938e3b44-1a99-4019-b69f-991c6ebb00b1&autoAuth=true&ctid=3d13b5cc-d235-4de8-8f3e-4fc6df91a673' }
+    { username: 'user1', password: 'password1' },
+    { username: 'user2', password: 'password2' }
 ];
 
 // Login endpoint
@@ -40,13 +40,21 @@ app.post('/login', (req, res) => {
     }
 
     console.log("✅ Login success for:", username);
-    res.json({ message: 'Login successful', reportUrl: user.reportUrl });
+    res.json({ message: 'Login successful, no token required' });
 });
 
 // Εξυπηρέτηση στατικών αρχείων
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Power BI Report
+app.get('/report', (req, res) => {
+    res.send(
+        <h1>Welcome to your Power BI Report</h1>
+       <iframe title="ERGA ORES" width="1140" height="541.25" src="https://app.powerbi.com/reportEmbed?reportId=3a030bfb-3f60-4865-9914-e12c8fa4506d&autoAuth=true&ctid=3d13b5cc-d235-4de8-8f3e-4fc6df91a673" frameborder="0" allowFullScreen="true"></iframe>
+    );
+});
+
 // Εκκίνηση server
 app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+    console.log(Server is running on port ${port});
 });
