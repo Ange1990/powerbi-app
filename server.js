@@ -6,7 +6,6 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 // Επιτρέπει όλα τα origins χωρίς περιορισμούς
-
 app.use(cors({
     origin: '*',  // Επιτρέπει όλα τα origins
     methods: ['GET', 'POST', 'OPTIONS'],
@@ -16,7 +15,6 @@ app.use(cors({
 
 // Χειρισμός προ-ερωτήσεων (Preflight requests)
 app.options('*', cors());
-
 
 // Middleware για να διαβάζει JSON requests
 app.use(express.json());
@@ -54,8 +52,7 @@ app.get('/report', (req, res) => {
     `);
 });
 
-
 // Εκκίνηση server
 app.listen(port, () => {
-    console.log(Server is running on port ${port});
+    console.log(`Server is running on port ${port}`);
 });
