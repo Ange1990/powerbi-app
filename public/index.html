@@ -129,10 +129,10 @@
         </div>
     </div>
 
-   <div id="report-container" style="display: none;">
-    <h1>Welcome to your Power BI Report</h1>
-    <iframe id="report-frame" title="Power BI Report" width="1140" height="541.25" frameborder="0" allowFullScreen="true"></iframe>
-</div>
+    <div id="report-container" style="display: none;">
+        <h1>Welcome to your Power BI Report</h1>
+       <iframe title="ERGA ORES" width="1140" height="541.25" src="https://app.powerbi.com/reportEmbed?reportId=3a030bfb-3f60-4865-9914-e12c8fa4506d&autoAuth=true&ctid=3d13b5cc-d235-4de8-8f3e-4fc6df91a673" frameborder="0" allowFullScreen="true"></iframe>
+    </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js" integrity="sha512-334uBDwY0iZ2TklV1OtDtBW9vp7jjP7SWRzT7Ehu1fdtPIjTpCwTSFb8HI/YBau9L1/kRBEOALrS229Kry4yFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanta/0.5.24/vanta.waves.min.js" integrity="sha512-gqHa0ICeg1WCe5rOOlxMjC1lXvXN3350qWwbePm2HV/pu2Qas+Nswuc+Eb62NZ/JOpMmOhZk4Chaak3twaBRRQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -151,40 +151,38 @@
             color: 0x1578c3
         });
 
+        // Συνάρτηση για την Υποβολή του Login
+         async function handleSubmit(e) {
+            e.preventDefault();
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+            const errorMessage = document.getElementById("error-message");
 
-    async function handleSubmit(e) {
-        e.preventDefault();
-        const username = document.getElementById("username").value;
-        const password = document.getElementById("password").value;
-        const errorMessage = document.getElementById("error-message");
+            try {
+                const response = await fetch("https://powerbi-app-git-main-george-angelidis-projects.vercel.app/login", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ username, password }) // Αφαιρέθηκε το credentials: "include"
+                });
 
-        try {
-            const response = await fetch("https://powerbi-app-git-main-george-angelidis-projects.vercel.app/login", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ username, password })
-            });
+                console.log(response); 
 
-            if (response.ok) {
-                const data = await response.json();
-                console.log(data);
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log(data);
 
-                // Ενημέρωση iframe με το δυναμικό URL
-                document.getElementById("report-frame").src = data.reportUrl;
-
-                // Απόκρυψη login και εμφάνιση του report
-                document.querySelector(".login-container").style.display = "none";
-                document.getElementById("report-container").style.display = "block";
-            } else {
-                errorMessage.textContent = "Login failed. Please check your credentials.";
+                    // Ανακατεύθυνση στο Power BI report
+                    window.location.href = "https://app.powerbi.com/reportEmbed?reportId=3a030bfb-3f60-4865-9914-e12c8fa4506d&autoAuth=true&ctid=3d13b5cc-d235-4de8-8f3e-4fc6df91a673";
+                } else {
+                    errorMessage.textContent = "Login failed. Please check your credentials.";
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                errorMessage.textContent = "An error occurred. Please try again.";
             }
-        } catch (error) {
-            console.error("Error:", error);
-            errorMessage.textContent = "An error occurred. Please try again.";
         }
-    }
 
-    document.getElementById("login-form").addEventListener("submit", handleSubmit);
-</script>
+        document.getElementById("login-form").addEventListener("submit", handleSubmit);
+    </script>
 </body>
 </html>
