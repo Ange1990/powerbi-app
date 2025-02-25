@@ -52,7 +52,4 @@ app.get('/report', (req, res) => {
     `);
 });
 
-// Εκκίνηση server
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
-});
+
