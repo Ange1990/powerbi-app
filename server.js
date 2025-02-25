@@ -5,28 +5,23 @@ const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 5000;
 
-// CORS για να επιτρέπει όλα τα requests από όλους
+// Επιτρέπει όλα τα origins χωρίς περιορισμούς
 app.use(cors({
-    origin: '*',  // Επιτρέπει όλα τα origins
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Επιτρέπει όλα τα methods
-    allowedHeaders: ['Content-Type', 'Authorization'], // Επιτρέπει όλα τα headers
-    credentials: false, // Αν δε χρειάζεσαι cookies ή authentication
-    optionsSuccessStatus: 200 // Για να μην υπάρχουν προβλήματα με preflight requests
+    origin: true, // Επιτρέπει requests από όλους
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type']
 }));
-
-// Middleware για OPTIONS requests (Preflight requests)
-app.options('*', cors());
 
 // Middleware για να διαβάζει JSON requests
 app.use(express.json());
 
-// Dummy users με απλά passwords (χωρίς κρυπτογράφηση)
+// Dummy users
 const users = [
     { username: 'user1', password: 'password1' },
     { username: 'user2', password: 'password2' }
 ];
 
-// Login endpoint χωρίς JWT
+// Login endpoint
 app.post('/login', (req, res) => {
     console.log("🔹 Received login request:", req.body);
 
@@ -34,7 +29,7 @@ app.post('/login', (req, res) => {
     const user = users.find(u => u.username === username);
 
     if (!user || password !== user.password) {
-        console.log("❌ Invalid login for:", username);
+        console.log("❌ Login failed for:", username);
         return res.status(401).json({ message: 'Invalid credentials' });
     }
 
@@ -42,15 +37,10 @@ app.post('/login', (req, res) => {
     res.json({ message: 'Login successful, no token required' });
 });
 
-// Εξυπηρέτηση στατικών αρχείων από τον φάκελο "public"
+// Εξυπηρέτηση στατικών αρχείων
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Κύρια σελίδα
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
-
-// Διαδρομή Power BI Report χωρίς JWT έλεγχο
+// Power BI Report
 app.get('/report', (req, res) => {
     res.send(`
         <h1>Welcome to your Power BI Report</h1>
