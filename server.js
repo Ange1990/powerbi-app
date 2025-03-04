@@ -21,7 +21,7 @@ app.use(express.json());
 
 // Dummy users με τα αντίστοιχα reportId
 const users = [
-    { username: 'user1', password: '8Rvn5/_Z5]', reportId: '938e3b44-1a99-4019-b69f-991c6ebb00b1' }, // Report 1
+    { username: 'user1', password: '8Rvn5/_Z5]', reportId: 'f741779c-8071-42cc-b87e-fd5c71e2672f' }, // Report 1
     { username: 'user2', password: '8{KN1uf64>', reportId: '58ad17a7-d43c-4458-b91c-87ae7629284c' }  // Report 2
 ];
 
