@@ -19,10 +19,10 @@ app.options('*', cors());
 // Middleware για να διαβάζει JSON requests
 app.use(express.json());
 
-// Dummy users
+// Dummy users με τα αντίστοιχα reportId
 const users = [
-    { username: 'user1', password: 'password1' },
-    { username: 'user2', password: 'password2' }
+    { username: 'user1', password: 'password1', reportId: '938e3b44-1a99-4019-b69f-991c6ebb00b1' }, // Report 1
+    { username: 'user2', password: 'password2', reportId: '3a030bfb-3f60-4865-9914-e12c8fa4506d' }  // Report 2
 ];
 
 // Login endpoint
@@ -38,20 +38,17 @@ app.post('/login', (req, res) => {
     }
 
     console.log("✅ Login success for:", username);
-    res.json({ message: 'Login successful, no token required' });
+    // Επιστρέφουμε το URL του σωστού Power BI report
+    res.json({ 
+        message: 'Login successful', 
+        reportUrl: `https://app.powerbi.com/reportEmbed?reportId=${user.reportId}&autoAuth=true&ctid=3d13b5cc-d235-4de8-8f3e-4fc6df91a673`
+    });
 });
 
 // Εξυπηρέτηση στατικών αρχείων
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Power BI Report
-app.get('/report', (req, res) => {
-    res.send(`
-        <h1>Welcome to your Power BI Report</h1>
-        <iframe title="ERGA ORES" width="1140" height="541.25" src="https://app.powerbi.com/reportEmbed?reportId=3a030bfb-3f60-4865-9914-e12c8fa4506d&autoAuth=true&ctid=3d13b5cc-d235-4de8-8f3e-4fc6df91a673" frameborder="0" allowFullScreen="true"></iframe>
-    `);
+// Εκκίνηση του server
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
 });
-
-// Εξάγουμε την εφαρμογή για να τη διαχειριστεί το Vercel
-module.exports = app;
-
