@@ -41,7 +41,7 @@ app.post('/login', (req, res) => {
     // Επιστρέφουμε το URL του σωστού Power BI report
     res.json({ 
         message: 'Login successful', 
-        reportUrl: `https://app.powerbi.com/reportEmbed?reportId=${user.reportId}&autoAuth=true&ctid=3d13b5cc-d235-4de8-8f3e-4fc6df91a673`
+        reportUrl: `https://app.powerbi.com/reportEmbed?reportId=${user.reportId}&autoAuth=true&ctid=3d13b5cc-d235-4de8-8f3e-4fc6df91a673&mobile=1`
     });
 });
 
