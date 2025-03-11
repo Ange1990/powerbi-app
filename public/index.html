@@ -125,6 +125,7 @@
             width: 100%;
             height: 80vh;
             min-height: 400px;
+             min-width: 300px; /* Ελάχιστο πλάτος για μικρές οθόνες */
             border: none;
         }
                
@@ -154,9 +155,10 @@
                 padding: 10px;
             }
 
-            #report-container iframe {
-                height: 350px !important;
-            }
+             #report-container iframe {
+        height: 350px !important; /* Μειωμένο ύψος για μικρότερες οθόνες */
+        min-height: 300px;
+    }
 
             .powered-by {
                 font-size: 14px;
