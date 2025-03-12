@@ -154,7 +154,7 @@
 
     <script>
         // Σύνδεση με το Vanta Waves
-        VANTA.WAVES({
+       let vantaEffect = VANTA.WAVES({
             el: ".wrapper",
             mouseControls: true,
             touchControls: true,
@@ -188,6 +188,11 @@
                     document.getElementById("report-container").style.display = "block";
                     document.getElementById("report-frame").src = data.reportUrl;
                     document.getElementById("logout-btn").style.display = "block";
+                    
+                    // Σταμάτα το background animation
+                    if (vantaEffect) {
+                        vantaEffect.destroy();
+                    }
                 } else {
                     errorMessage.textContent = "Login failed. Please check your credentials.";
                 }
@@ -203,6 +208,19 @@
             document.getElementById("login-container").style.display = "block";
             document.getElementById("report-container").style.display = "none";
             document.getElementById("logout-btn").style.display = "none";
+             
+             // Ξεκίνημα του Vanta animation ξανά
+            vantaEffect = VANTA.WAVES({
+                el: ".wrapper",
+                mouseControls: true,
+                touchControls: true,
+                gyroControls: false,
+                minHeight: 200.00,
+                minWidth: 200.00,
+                scale: 1.00,
+                scaleMobile: 1.00,
+                color: 0x1578c3
+            });
         });
     </script>
 </body>
