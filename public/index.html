@@ -231,6 +231,7 @@
                     document.getElementById("report-container").style.display = "block";
                     document.getElementById("report-frame").src = data.reportUrl;
                     document.getElementById("logout-btn").style.display = "block";
+                     document.getElementById("powered-by").style.display = "none";  // Αφαίρεση του "Powered by"
 
                     // Σταμάτα το background animation
                     if (vantaEffect) {
@@ -254,6 +255,7 @@
             document.getElementById("login-container").style.display = "block";
             document.getElementById("report-container").style.display = "none";
             document.getElementById("logout-btn").style.display = "none";
+             document.getElementById("powered-by").style.display = "block";  // Επαναφορά του "Powered by"
 
             // Ξεκίνημα του Vanta animation ξανά
             vantaEffect = VANTA.WAVES({
