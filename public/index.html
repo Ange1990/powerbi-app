@@ -155,7 +155,7 @@
     <script>
         // Σύνδεση με το Vanta Waves
         let vantaEffect = VANTA.WAVES({
-            el: "#background", // Χρησιμοποιούμε το background div
+            el: ".wrapper",
             mouseControls: true,
             touchControls: true,
             gyroControls: false,
@@ -190,11 +190,10 @@
                     document.getElementById("report-frame").src = data.reportUrl;
                     document.getElementById("logout-btn").style.display = "block";
 
-                    // Σταμάτα το background animation και κρύψε το #background div
+                    // Σταμάτα το background animation
                     if (vantaEffect) {
                         vantaEffect.destroy();
                     }
-                    document.getElementById("background").style.display = "none";
                 } else {
                     errorMessage.textContent = "Login failed. Please check your credentials.";
                 }
@@ -214,9 +213,9 @@
             document.getElementById("report-container").style.display = "none";
             document.getElementById("logout-btn").style.display = "none";
 
-            // Επανεκκίνηση του Vanta animation και εμφάνιση του background div
+            // Ξεκίνημα του Vanta animation ξανά
             vantaEffect = VANTA.WAVES({
-                el: "#background", // Επαναφέρουμε το background div για το animation
+                el: ".wrapper",
                 mouseControls: true,
                 touchControls: true,
                 gyroControls: false,
@@ -226,7 +225,6 @@
                 scaleMobile: 1.00,
                 color: 0x1578c3
             });
-            document.getElementById("background").style.display = "block";
         });
     </script>
 </body>
