@@ -112,60 +112,6 @@
             font-weight: normal;
             margin-top: 5px;
         }
-
- /* Power BI Report Styling */
-#report-container {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    overflow: hidden;
-}
-    #report-container iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-    min-width: 300px;
-}
-               
-        /* Responsive Styles */
-        @media screen and (max-width: 768px) {
-            .login-container {
-                width: 90%;
-                max-width: 320px;
-                padding: 20px;
-            }
-
-            .login-container h2 {
-                font-size: 18px;
-            }
-
-            .login-container input {
-                padding: 10px;
-                font-size: 14px;
-            }
-
-            .login-container button {
-                padding: 10px;
-                font-size: 14px;
-            }
-
-            #report-container {
-                padding: 10px;
-            }
-
-             #report-container iframe {
-        height: 350px !important; /* Μειωμένο ύψος για μικρότερες οθόνες */
-        min-height: 300px;
-    }
-
-            .powered-by {
-                font-size: 14px;
-                padding: 8px 15px;
-                bottom: 10px;
-                right: 10px;
-            }
-        }
-               
     </style>
 </head>
 <body>
@@ -189,10 +135,9 @@
         <span>Powered by SSPC</span>
     </div>
     
-    <!-- Power BI Report -->
-    <div id="report-container">
+    <div id="report-container" style="display: none;">
         <h1>Welcome to your Power BI Report</h1>
-        <iframe id="powerbi-frame" title="Power BI Report" frameborder="0" allowFullScreen="true"></iframe>
+       <iframe title="ERGA ORES" width="1140" height="541.25" src="https://app.powerbi.com/reportEmbed?reportId=3a030bfb-3f60-4865-9914-e12c8fa4506d&autoAuth=true&ctid=3d13b5cc-d235-4de8-8f3e-4fc6df91a673" frameborder="0" allowFullScreen="true"></iframe>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js" integrity="sha512-334uBDwY0iZ2TklV1OtDtBW9vp7jjP7SWRzT7Ehu1fdtPIjTpCwTSFb8HI/YBau9L1/kRBEOALrS229Kry4yFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -226,16 +171,12 @@
                     body: JSON.stringify({ username, password })
                 });
 
-               if (response.ok) {
+                if (response.ok) {
                     const data = await response.json();
-                    console.log("✅ Login successful:", data);
+                    console.log(data);
 
-                    // Απόκρυψη του login και εμφάνιση του report
-                    document.querySelector(".wrapper").style.display = "none";
-                    document.getElementById("report-container").style.display = "block";
-
-                    // Φόρτωση του σωστού Power BI report στο iframe
-                    document.getElementById("powerbi-frame").src = data.reportUrl;
+                    // Ανακατεύθυνση στο Power BI report για τον χρήστη
+                    window.location.href = data.reportUrl; // Χρησιμοποιούμε το reportUrl που επιστρέφει ο server
                 } else {
                     errorMessage.textContent = "Login failed. Please check your credentials.";
                 }
