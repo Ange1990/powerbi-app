@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login with Dynamic Background</title>
-           <style>
+    <style>
         body {
             margin: 0;
             padding: 0;
@@ -87,7 +87,6 @@
             margin-top: 10px;
         }
 
-        /* Στυλ για το σλόγκαν στο κάτω δεξί μέρος */
         .powered-by {
             position: absolute;
             bottom: 20px;
@@ -102,8 +101,8 @@
             box-shadow: 0px 4px 15px rgba(58, 120, 224, 0.3);
             letter-spacing: 1px;
             z-index: 10;
-            font-style: italic; /* Κεκλιμένη γραμματοσειρά */
-            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5); /* Σκίαση */
+            font-style: italic;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
         }
 
         .powered-by span {
@@ -112,7 +111,8 @@
             font-weight: normal;
             margin-top: 5px;
         }
-                   #logout-btn {
+
+        #logout-btn {
             background: red;
             display: none;
         }
@@ -137,15 +137,15 @@
             <div class="error-message" id="error-message"></div>
         </div>
     </div>
-     <!-- Σλόγκαν στο κάτω δεξί μέρος -->
-     <div class="powered-by">
+
+    <div class="powered-by">
         "Ανακαλύψτε τη Δύναμη των Δεδομένων με το Power BI"
         <span>Powered by SSPC</span>
     </div>
-    
+
     <div id="report-container" style="display: none;">
         <h1>Welcome to your Power BI Report</h1>
-       <iframe id="report-frame" width="100%" height="100%" frameborder="0" allowFullScreen="true"></iframe>
+        <iframe id="report-frame" width="100%" height="100%" frameborder="0" allowFullScreen="true"></iframe>
         <button id="logout-btn">Logout</button>
     </div>
 
@@ -154,8 +154,8 @@
 
     <script>
         // Σύνδεση με το Vanta Waves
-       let vantaEffect = VANTA.WAVES({
-            el: ".wrapper",
+        let vantaEffect = VANTA.WAVES({
+            el: "#background", // Χρησιμοποιούμε το background div
             mouseControls: true,
             touchControls: true,
             gyroControls: false,
@@ -166,8 +166,8 @@
             color: 0x1578c3
         });
 
-      // Συνάρτηση για την Υποβολή του Login
-    async function handleSubmit(e) {
+        // Συνάρτηση για την Υποβολή του Login
+        async function handleSubmit(e) {
             e.preventDefault();
             const username = document.getElementById("username").value;
             const password = document.getElementById("password").value;
@@ -184,15 +184,17 @@
                     const data = await response.json();
                     console.log(data);
 
+                    // Κρύψε το login και εμφάνισε το report
                     document.getElementById("login-container").style.display = "none";
                     document.getElementById("report-container").style.display = "block";
                     document.getElementById("report-frame").src = data.reportUrl;
                     document.getElementById("logout-btn").style.display = "block";
-                    
-                    // Σταμάτα το background animation
+
+                    // Σταμάτα το background animation και κρύψε το #background div
                     if (vantaEffect) {
                         vantaEffect.destroy();
                     }
+                    document.getElementById("background").style.display = "none";
                 } else {
                     errorMessage.textContent = "Login failed. Please check your credentials.";
                 }
@@ -202,16 +204,19 @@
             }
         }
 
+        // Event listener για το login
         document.getElementById("login-form").addEventListener("submit", handleSubmit);
-         document.getElementById("logout-btn").addEventListener("click", () => {
-            // Κρύβουμε το report και ξαναδείχνουμε το login
+
+        // Λειτουργία Logout
+        document.getElementById("logout-btn").addEventListener("click", () => {
+            // Εμφάνιση login και κρύψιμο του report
             document.getElementById("login-container").style.display = "block";
             document.getElementById("report-container").style.display = "none";
             document.getElementById("logout-btn").style.display = "none";
-             
-             // Ξεκίνημα του Vanta animation ξανά
+
+            // Επανεκκίνηση του Vanta animation και εμφάνιση του background div
             vantaEffect = VANTA.WAVES({
-                el: ".wrapper",
+                el: "#background", // Επαναφέρουμε το background div για το animation
                 mouseControls: true,
                 touchControls: true,
                 gyroControls: false,
@@ -221,6 +226,7 @@
                 scaleMobile: 1.00,
                 color: 0x1578c3
             });
+            document.getElementById("background").style.display = "block";
         });
     </script>
 </body>
