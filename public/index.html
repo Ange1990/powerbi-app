@@ -114,27 +114,40 @@
             margin-top: 5px;
         }
 
-       #logout-btn {
-    background: #ff4d4d;  /* Χρώμα για το κουμπί logout */
+#logout-btn {
+    background: #ff4d4d;
     color: white;
     font-size: 16px;
     font-weight: bold;
     padding: 12px 24px;
     border: none;
-    border-radius: 25px;  /* Στρογγυλές γωνίες */
+    border-radius: 25px;
     cursor: pointer;
     box-shadow: 0px 4px 10px rgba(255, 77, 77, 0.3);
-    transition: all 0.3s ease;  /* Προσθήκη εφέ μετάβασης */
-    display: block;
-    margin-top: 20px;  /* Δίνει απόσταση από το iframe */
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
     font-family: 'Poppins', sans-serif;
+    width: 200px;
+    text-align: center;
 }
 
 #logout-btn:hover {
-    background-color: #ff3333;  /* Σκούρο κόκκινο χρώμα κατά το hover */
-    transform: scale(1.05);  /* Ελαφριά μεγέθυνση του κουμπιού */
-    box-shadow: 0px 5px 15px rgba(255, 77, 77, 0.4);  /* Ενίσχυση σκιάς */
+    background-color: #ff3333;
+    transform: scale(1.05);
+    box-shadow: 0px 5px 15px rgba(255, 77, 77, 0.4);
 }
+
+/* Τοποθέτηση του κουμπιού Logout στο κέντρο */
+.logout-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
 
 
         #report-container {
