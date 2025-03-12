@@ -112,19 +112,6 @@
             font-weight: normal;
             margin-top: 5px;
         }
-                 #logout-btn {
-            display: none;
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: red;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-        }
     </style>
 </head>
 <body>
@@ -171,7 +158,7 @@
         });
 
       // Συνάρτηση για την Υποβολή του Login
-          async function handleSubmit(e) {
+    async function handleSubmit(e) {
             e.preventDefault();
             const username = document.getElementById("username").value;
             const password = document.getElementById("password").value;
@@ -186,13 +173,10 @@
 
                 if (response.ok) {
                     const data = await response.json();
-                    sessionStorage.setItem("reportUrl", data.reportUrl);
+                    console.log(data);
 
-                    // Προβολή του Power BI Report
-                    document.getElementById("login-form").style.display = "none";
-                    document.getElementById("report-container").style.display = "block";
-                    document.getElementById("report-frame").src = data.reportUrl;
-                    document.getElementById("logout-btn").style.display = "block";
+                    // Ανακατεύθυνση στο Power BI report για τον χρήστη
+                    window.location.href = data.reportUrl; // Χρησιμοποιούμε το reportUrl που επιστρέφει ο server
                 } else {
                     errorMessage.textContent = "Login failed. Please check your credentials.";
                 }
@@ -203,21 +187,6 @@
         }
 
         document.getElementById("login-form").addEventListener("submit", handleSubmit);
-
-        document.getElementById("logout-btn").addEventListener("click", () => {
-            sessionStorage.removeItem("reportUrl");
-            window.location.reload();
-        });
-
-        window.onload = () => {
-            const reportUrl = sessionStorage.getItem("reportUrl");
-            if (reportUrl) {
-                document.getElementById("login-form").style.display = "none";
-                document.getElementById("report-container").style.display = "block";
-                document.getElementById("report-frame").src = reportUrl;
-                document.getElementById("logout-btn").style.display = "block";
-            }
-        };
     </script>
 </body>
 </html>
