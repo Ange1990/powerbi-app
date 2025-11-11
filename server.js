@@ -25,7 +25,7 @@ const users = [
     { username: 'user2', password: '1234', reportId: '08d0f93e-4c0c-418f-a835-376ce1ced794' },  // Report 2
     { username: 'festos', password: '8Rvn5', reportId: '1c55c17c-67f2-4932-a41d-bbbfaf7e5a53' },
     { username: 'hyper', password: '1111', reportId: 'b2ec96b0-d836-49db-8cb4-a7888c37095b' },
-    { username: 'hyper', password: '2222', reportId: '430d097c-50de-4321-be7e-bb7c9af3e7d1' },
+    { username: 'hyper2', password: '2222', reportId: '430d097c-50de-4321-be7e-bb7c9af3e7d1' },
     { username: 'user4', password: '1111', reportId: 'ecb632bb-3a55-46a6-a440-b25043800279' }
     
 ];
