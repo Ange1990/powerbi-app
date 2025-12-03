@@ -26,7 +26,7 @@ const users = [
     { username: 'festos', password: '8Rvn5', reportId: '1c55c17c-67f2-4932-a41d-bbbfaf7e5a53' },
     { username: 'hyper', password: '1111', reportId: 'b2ec96b0-d836-49db-8cb4-a7888c37095b' },
     { username: 'hyper2', password: '2222', reportId: '430d097c-50de-4321-be7e-bb7c9af3e7d1' },
-    { username: 'sx', password: '1234', reportId: '34db4311-1d43-48d7-bed6-77907479148d' }
+    { username: 'sx', password: '1234sx!', reportId: '34db4311-1d43-48d7-bed6-77907479148d' }
     
 ];
 
