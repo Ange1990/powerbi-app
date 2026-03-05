@@ -26,8 +26,8 @@ const users = [
     { username: 'festos', password: '8Rvn5', reportId: '1c55c17c-67f2-4932-a41d-bbbfaf7e5a53' },
     { username: 'hyper', password: '1111', reportId: 'b2ec96b0-d836-49db-8cb4-a7888c37095b' },
     { username: 'hyper2', password: '2222', reportId: '430d097c-50de-4321-be7e-bb7c9af3e7d1' },
-    { username: 'sx', password: '1234sx!', reportId: '22f08bdd-1a93-4d88-9551-af36d05783cc' }
-    
+    { username: 'sx', password: '1234sx!', reportId: '22f08bdd-1a93-4d88-9551-af36d05783cc' },
+     { username: 'hyper', password: 'hyper!', reportId: '4660cae7-03a1-4e46-a298-f28d6a77b4ef'}
 ];
 
 // Login endpoint
